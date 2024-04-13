@@ -8,7 +8,7 @@ const App = () => {
   const [selectedStock, setSelectedStock] = useState('Macrosoft');
   const [daysToShow, setDaysToShow] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
-
+  
   const handleStockChange = (stock) => {
     setSelectedStock(stock);
     setCurrentPage(1);
@@ -43,21 +43,22 @@ const App = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
+    <div className="flex flex-col items-center justify-center mt-5 md:mt-20 bg-gray-100">
       <h1 className="text-3xl font-bold mb-8">Stock Data</h1>
-      <div className="w-full max-w-md bg-white shadow-lg rounded-lg p-6">
+      <div className="w-full max-w-md bg-violet-400 opacity-85 shadow-lg rounded-lg p-6">
         <StockSelect
           stocks={stockData}
           selectedStock={selectedStock}
           onStockChange={handleStockChange}
         />
-        <StockDataTable data={getDataToDisplay()} />
+        <StockDataTable data={getDataToDisplay()} currentPage={currentPage} />
         <Pagination
           currentPage={currentPage}
           pageCount={getPageCount()}
           onPageChange={handlePageChange}
           daysToShow={daysToShow}
           onDaysToShowChange={handleDaysToShowChange}
+          
         />
       </div>
     </div>

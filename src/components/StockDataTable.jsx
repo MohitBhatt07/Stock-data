@@ -1,6 +1,17 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
-const StockDataTable = ({ data }) => {
+const StockDataTable = ({ data , currentPage}) => { 
+  const [shouldAnimate ,setShouldAnimate ] = useState(false);
+
+  useEffect(() => {
+    setShouldAnimate(true);
+    const timer = setTimeout(() => {
+      setShouldAnimate(false);
+    }, 500); 
+
+    return () => clearTimeout(timer);
+  }, [currentPage]);
+
   return (
     <div className="overflow-x-auto">
       <table className="w-full table-auto">
@@ -19,7 +30,7 @@ const StockDataTable = ({ data }) => {
             >
               <td className="px-4 py-2">{item.date}</td>
               <td
-                className={`px-4 py-2 ${
+                className={`${shouldAnimate ?"animate-fall":""} px-4 py-2 ${
                   item.open >
                   (index > 0 ? data[index - 1].close : 0)
                     ? 'text-green-500'
@@ -29,7 +40,7 @@ const StockDataTable = ({ data }) => {
                 {item.open}
               </td>
               <td
-                className={`px-4 py-2 ${
+                className={`${shouldAnimate ? "animate-fall": ""} px-4 py-2 ${
                   item.close > item.open ? 'text-green-500' : 'text-red-500'
                 }`}
               >
